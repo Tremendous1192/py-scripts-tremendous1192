@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import ShuffleSplit
+from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.metrics import roc_auc_score
 
 def train_roc_auc(X: pd.core.frame.DataFrame,
@@ -8,12 +8,11 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
           n_splits: int,
           test_size: float):
     '''
-    ShuffleSplitによるLogisticRegression推定器の学習\
+    StratifiedShuffleSplitを用いたLogisticRegression推定器の学習\
     (roc_auc_score固定)
     '''
     # 交差分割
-    rs = ShuffleSplit(n_splits =  n_splits, test_size = test_size, random_state = 1192)
-    rs.get_n_splits(X)
+    sss = StratifiedShuffleSplit(n_splits =  n_splits, test_size = test_size, random_state = 1192)
 
     # 初期化
     tsr = RandomForestClassifier(class_weight = "balanced", random_state = 1192)
@@ -22,7 +21,7 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
     best_index = None
 
     # k-fold cross validation
-    for i, (train_index, valid_index) in enumerate(rs.split(X)):
+    for i, (train_index, valid_index) in enumerate(sss.split(X, y)):
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
         y_proba = tsr.predict_proba(X.iloc[valid_index, :])[:, 1]
         score = roc_auc_score(y.iloc[valid_index], y_proba)
