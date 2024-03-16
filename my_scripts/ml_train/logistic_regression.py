@@ -58,7 +58,7 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
     # k-fold cross validation
     for i, (train_index, valid_index) in enumerate(rs.split(X)):
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
-        y_proba = tsr.predict_proba(X)
+        y_proba = tsr.predict_proba(X)[:, 1]
         score = roc_auc_score(y, y_proba)
         print(f"Fold {i}: {score}")
         scores.append(score)
