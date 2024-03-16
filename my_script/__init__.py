@@ -1,1 +1,0 @@
-from my_script.example import *
