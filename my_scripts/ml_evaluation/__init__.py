@@ -1,1 +1,1 @@
-from ml_evaluation.regression import *
+from my_scripts.ml_evaluation.regression import *

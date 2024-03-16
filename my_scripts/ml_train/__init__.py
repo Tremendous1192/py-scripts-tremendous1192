@@ -1,1 +1,1 @@
-from ml_train.theil_sen_regressor_shuffle_split import *
+from my_scripts.ml_train.theil_sen_regressor_shuffle_split import *
