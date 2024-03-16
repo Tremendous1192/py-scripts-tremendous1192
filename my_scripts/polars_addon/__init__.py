@@ -1,5 +1,5 @@
-from polars_addon.cast import *
-from polars_addon.comparison import *
-from polars_addon.pandas import *
-from polars_addon.transform import *
+from my_scripts.polars_addon.cast import *
+from my_scripts.polars_addon.comparison import *
+from my_scripts.polars_addon.pandas import *
+from my_scripts.polars_addon.transform import *
 
