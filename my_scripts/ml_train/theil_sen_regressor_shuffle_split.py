@@ -23,8 +23,8 @@ def train(X: pd.core.frame.DataFrame,
     # k-fold cross validation
     for i, (train_index, valid_index) in enumerate(rs.split(X)):
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
-        y_pred = tsr.predict(X)
-        score = metric(y, y_pred)
+        y_pred = tsr.predict(X.iloc[~train_index, :])
+        score = metric(y.iloc[~train_index], y_pred)
         print(f"Fold {i}: {score}")
         scores.append(score)
         if score < best_score:
