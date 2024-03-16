@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import ShuffleSplit
 from sklearn.metrics import roc_auc_score
 
@@ -16,7 +16,7 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
     rs.get_n_splits(X)
 
     # 初期化
-    tsr = LogisticRegression(max_iter = 1000, class_weight = "balanced", random_state = 1192)
+    tsr = RandomForestClassifier(class_weight = "balanced", random_state = 1192)
     scores = []
     best_score = -1000
     best_index = None

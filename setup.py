@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'py-scripts-tremendous1192',
-    version = "0.0.25",
+    version = "0.0.26",
     description = "My scripts",
     long_description = "",
     author = 'Tremendous1192',
