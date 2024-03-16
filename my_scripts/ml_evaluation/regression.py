@@ -6,7 +6,7 @@ import japanize_matplotlib
 import seaborn as sns
 
 
-def estimate_regression(y_true: pd.core.series.Series, y_pred: np.ndarray, metric):
+def evaluate(y_true: pd.core.series.Series, y_pred: np.ndarray, metric):
     '''
     回帰問題の精度を確認する関数
     '''
