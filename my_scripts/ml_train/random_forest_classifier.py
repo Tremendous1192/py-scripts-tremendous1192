@@ -24,7 +24,7 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
         y_proba = tsr.predict_proba(X.iloc[valid_index, :])[:, 1]
         score = roc_auc_score(y.iloc[valid_index], y_proba)
-        print(f"Fold {i}: {score}")
+        print(f"Fold {i}: {score:.3f}")
         # 最良スコアのインデックスを残す
         if score > best_score:
             best_score = score
@@ -32,7 +32,7 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
     
     # 結果
     model = tsr.fit(X.iloc[best_index, :], y.iloc[best_index])
-    print(f"Best Score {best_score}")
+    print(f"Best Score {best_score:.3f}")
     return model, best_index, best_score
 
 def train_roc_auc_square(X: pd.core.frame.DataFrame,
@@ -64,7 +64,7 @@ def train_roc_auc_square(X: pd.core.frame.DataFrame,
         score_valid = roc_auc_score(y.iloc[train_index], y_proba)
         # 訓練データと検証データの評価関数の積で評価する
         score = score_train * score_valid
-        print(f"Fold {i}: {score}")
+        print(f"Fold {i}: {score:.3f} = {score_train:.3f} * {score_valid:.3f}")
         # 最良スコアのインデックスを残す
         if score > best_score:
             best_score = score
@@ -72,6 +72,6 @@ def train_roc_auc_square(X: pd.core.frame.DataFrame,
     
     # 結果
     model = tsr.fit(X.iloc[best_index, :], y.iloc[best_index])
-    print(f"Best Score {best_score}")
+    print(f"Best Score {best_score:.3f}")
     return model, best_index, best_score
 
