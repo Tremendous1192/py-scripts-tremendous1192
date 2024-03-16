@@ -29,7 +29,7 @@ def local_outlier_factor(X: pd.core.frame.DataFrame,
     LocalOutlierFactorによる異常値スコア列を追加する関数
     '''
     # 学習
-    clf = LocalOutlierFactor(random_state = 1192)
+    clf = LocalOutlierFactor()
     clf.fit(X[y == normal_value])
 
     # 異常値スコアの追加
