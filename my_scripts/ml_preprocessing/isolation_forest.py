@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.linear_model import IsolationForest
+from sklearn.ensemble import IsolationForest
 
 def score_samples(X: pd.core.frame.DataFrame,
                   y: pd.core.series.Series,
