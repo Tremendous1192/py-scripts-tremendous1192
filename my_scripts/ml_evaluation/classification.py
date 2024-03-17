@@ -31,15 +31,15 @@ def check_clasiffication(y_true: pd.core.series.Series, y_pred: np.ndarray):
     '''
     分類問題の混合行列を計算する
     '''
-    positive = "true" if pl.Series("true", y_true).dtype == pl.Boolean else "1"
-    negative = "false" if pl.Series("predict", y_pred).dtype == pl.Boolean else "0"
+    positive = "true" if pl.Series("true", y_true.to_numpy()).dtype == pl.Boolean else "1"
+    negative = "false" if pl.Series("predict", y_true.to_numpy()).dtype == pl.Boolean else "0"
     return (
         pl.DataFrame({
-            "True": y_true,
+            "Valid": y_true.to_numpy(),
             "Predicted": y_pred
         })
         .pivot(
-            index = "True", columns = "Predicted", values = "Predicted",
+            index = "Valid", columns = "Predicted", values = "Predicted",
             aggregate_function = "len", sort_columns = True
         )
         .with_columns( (pl.col(negative) + pl.col(positive)).alias("All") )
@@ -54,5 +54,5 @@ def check_clasiffication(y_true: pd.core.series.Series, y_pred: np.ndarray):
             pl.col(positive + "_rate[%]"),
             pl.col(negative + "_rate[%]")
         ])
-        .sort("True", descending = True)
+        .sort("Valid", descending = True)
     )
