@@ -35,11 +35,11 @@ def check_clasiffication(y_true: pd.core.series.Series, y_pred: np.ndarray):
     negative = "false" if pl.Series("predict", y_true.to_numpy()).dtype == pl.Boolean else "0"
     return (
         pl.DataFrame({
-            "Valid": y_true.to_numpy(),
+            "True": y_true.to_numpy(),
             "Predicted": y_pred
         })
         .pivot(
-            index = "Valid", columns = "Predicted", values = "Predicted",
+            index = "True", columns = "Predicted", values = "Predicted",
             aggregate_function = "len", sort_columns = True
         )
         .with_columns( (pl.col(negative) + pl.col(positive)).alias("All") )
@@ -48,11 +48,12 @@ def check_clasiffication(y_true: pd.core.series.Series, y_pred: np.ndarray):
             (pl.col(positive) / pl.col("All") * 100).round(decimals = 1).alias(positive + "_rate[%]")
         ])
         .select([
+            pl.col("True"),
             pl.col(positive),
             pl.col(negative),
             pl.col("All"),
             pl.col(positive + "_rate[%]"),
             pl.col(negative + "_rate[%]")
         ])
-        .sort("Valid", descending = True)
+        .sort("True", descending = True)
     )
