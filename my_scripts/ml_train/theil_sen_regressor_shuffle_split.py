@@ -10,23 +10,21 @@ def train(X: pd.core.frame.DataFrame,
     '''
     ShuffleSplitによるTheil-Sen推定器の学習
     '''
-    # 交差分割
+    # 初期化
     rs = ShuffleSplit(n_splits =  n_splits, test_size = test_size, random_state = 1192)
     rs.get_n_splits(X)
-
-    # 初期化
     tsr = TheilSenRegressor(max_iter = 1000)
-    scores = []
     best_score = 1000000
     best_index = None
 
     # k-fold cross validation
     for i, (train_index, valid_index) in enumerate(rs.split(X)):
+        # 訓練データの学習
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
         y_pred = tsr.predict(X.iloc[valid_index, :])
         score = metric(y.iloc[valid_index], y_pred)
         print(f"Fold {i}: {score}")
-        scores.append(score)
+        # 最良スコアのインデックスを残す
         if score < best_score:
             best_score = score
             best_index = train_index

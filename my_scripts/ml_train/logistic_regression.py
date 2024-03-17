@@ -11,22 +11,20 @@ def train_roc_auc(X: pd.core.frame.DataFrame,
     StratifiedShuffleSplitを用いたLogisticRegression推定器の学習\
     (roc_auc_score固定)
     '''
-    # 交差分割
-    sss = StratifiedShuffleSplit(n_splits =  n_splits, test_size = test_size, random_state = 1192)
-
     # 初期化
+    sss = StratifiedShuffleSplit(n_splits =  n_splits, test_size = test_size, random_state = 1192)
     tsr = LogisticRegression(max_iter = 1000, class_weight = "balanced", random_state = 1192)
-    scores = []
     best_score = -1000
     best_index = None
 
     # k-fold cross validation
     for i, (train_index, valid_index) in enumerate(sss.split(X, y)):
+        # 訓練データの学習
         tsr.fit(X.iloc[train_index, :], y.iloc[train_index])
         y_proba = tsr.predict_proba(X.iloc[valid_index, :])[:, 1]
         score = roc_auc_score(y.iloc[valid_index], y_proba)
         print(f"Fold {i}: {score:.3f}")
-        scores.append(score)
+        # 最良スコアのインデックスを残す
         if score > best_score:
             best_score = score
             best_index = train_index
