@@ -26,7 +26,7 @@ def train_test_split(
         # 評価データの学習
         clf.fit(X.iloc[valid_index, :], y.iloc[valid_index])
         y_pred = clf.predict(X.iloc[train_index, :])
-        score_valid = f1_score(y.iloc[valid_index], y_pred, average = "macro")
+        score_valid = f1_score(y.iloc[train_index], y_pred, average = "macro")
         # 訓練データと検証データの評価関数の積で評価する
         score = score_train * score_valid
         # 最良スコアのインデックスを残す
