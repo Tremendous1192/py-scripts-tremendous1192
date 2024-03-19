@@ -15,7 +15,7 @@ def train_test_split(
     '''
     # 初期化
     rs = ShuffleSplit(n_splits = n_splits, test_size = test_size, random_state = radom_state)
-    best_score = 100000000
+    best_score = 1000000000
     best_index = None
 
     # k-fold cross validation
