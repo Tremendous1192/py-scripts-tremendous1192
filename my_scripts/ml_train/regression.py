@@ -23,11 +23,11 @@ def train_test_split(
         # 訓練データの学習
         est.fit(X.iloc[train_index, :], y.iloc[train_index])
         y_pred = est.predict(X.iloc[valid_index, :])
-        score_train = metric(y.iloc[valid_index], y_pred, average = "macro")
+        score_train = metric(y.iloc[valid_index], y_pred)
         # 評価データの学習
         est.fit(X.iloc[valid_index, :], y.iloc[valid_index])
         y_pred = est.predict(X.iloc[train_index, :])
-        score_valid = metric(y.iloc[train_index], y_pred, average = "macro")
+        score_valid = metric(y.iloc[train_index], y_pred)
         # 訓練データと検証データの評価関数の積で評価する
         score = score_train * score_valid
         # 最良スコアのインデックスを残す
