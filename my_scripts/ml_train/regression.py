@@ -1,6 +1,5 @@
 import pandas as pd
 from sklearn.model_selection import ShuffleSplit
-from sklearn.metrics import f1_score
 
 def train_test_split(
         est,
